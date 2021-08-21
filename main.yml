@@ -1,0 +1,6 @@
+- name: First Play
+  hosts: localhost
+  tasks:
+    - debug: msg="test one"
+
+
