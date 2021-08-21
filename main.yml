@@ -1,6 +1,7 @@
 - name: First Play
   hosts: localhost
   tasks:
-    - debug: msg="test one"
+    - name: get wget
+      apt: name=wget state=installed
 
 
