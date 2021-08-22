@@ -40,6 +40,12 @@
         accept_hostkey: yes
     - name: fastforward-script
       shell: start.sh
+        args:
+          chdir: /opt/playbooks/
+          executable: /bin/bash
+
+
+
 
 
 
