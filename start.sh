@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Python environment setup
 sudo virtualenv -p python3 /opt/app/gce/env
 source /opt/app/gce/env/bin/activate
