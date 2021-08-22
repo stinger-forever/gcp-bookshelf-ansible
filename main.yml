@@ -16,12 +16,13 @@
           - python
           - python3-pip
 
-    - name: pip setup part
+#    - name: pip setup part
       pip:
+      extra_args: --upgrade
         name:
           - pip
           - virtualenv
-      extra_args: --upgrade
+
 
 #  handlers:
 #  - name: some_name
