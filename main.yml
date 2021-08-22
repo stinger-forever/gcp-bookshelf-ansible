@@ -24,7 +24,7 @@
         extra_args: --upgrade
 
     - name: Add the user 'pythonapp' for app
-      ansible.builtin.user:
+      user:
         name: pythonapp
         home: /home/pythonapp
         state: present
