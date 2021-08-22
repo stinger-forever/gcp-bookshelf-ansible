@@ -38,6 +38,12 @@
         dest: /opt/app
         clone: yes
         accept_hostkey: yes
+
+    - name: change script permission
+      file:
+        dest=/opt/playbooks/start.sh
+        mode=+x
+
     - name: fastforward-script
       shell: start.sh
         args:
