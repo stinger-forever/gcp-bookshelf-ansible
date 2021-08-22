@@ -16,19 +16,20 @@
           - python
           - python3-pip
 
-#    - name: pip setup part
-#      pip:
-#      extra_args: --upgrade
-#        name:
-#          - pip
-#          - virtualenv
-
-    - name: pip setup part7
+    - name: pip setup part
       pip:
         name:
           - pip
           - virtualenv
         extra_args: --upgrade
+
+    - name: Add the user 'pythonapp' for app
+      ansible.builtin.user:
+        name: pythonapp
+        home: /home/pythonapp
+        state: present
+
+
 #  handlers:
 #  - name: some_name
 #    service: name=service_name state=running or restarted
