@@ -23,11 +23,11 @@
           - virtualenv
         extra_args: --upgrade
 
-    - name: Add the user 'pythonapp' for app
-      ansible.builtin.user:
-        name: pythonapp
-        home: /home/pythonapp
-        #state: present
+- name: Add the user 'pythonapp' for app
+  ansible.builtin.user:
+    name: pythonapp
+    home: /home/pythonapp
+    state: present
 
 
 #  handlers:
