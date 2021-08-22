@@ -38,6 +38,7 @@
         dest: /opt/app
         single_branch: yes
         version: main
+        accept_hostkey: yes
 
 
 
