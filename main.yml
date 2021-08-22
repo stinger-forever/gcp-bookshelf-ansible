@@ -17,13 +17,18 @@
           - python3-pip
 
 #    - name: pip setup part
+#      pip:
+#      extra_args: --upgrade
+#        name:
+#          - pip
+#          - virtualenv
+
+    - name: pip setup part7
       pip:
-      extra_args: --upgrade
         name:
           - pip
           - virtualenv
-
-
+        extra_args: --upgrade
 #  handlers:
 #  - name: some_name
 #    service: name=service_name state=running or restarted
