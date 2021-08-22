@@ -40,3 +40,5 @@ wget -O /opt/app/config.py https://github.com/GoogleCloudPlatform/getting-starte
 # Start service via supervisorctl
 supervisorctl reread
 supervisorctl update
+
+exit 0
