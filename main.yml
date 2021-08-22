@@ -29,6 +29,17 @@
         home: /home/pythonapp
         state: present
 
+    - name: export variable
+      shell: "export HOME=/root"
+
+    - name: clone the project
+      git:
+        repo: https://github.com/GoogleCloudPlatform/getting-started-python.git
+        dest: /opt/app
+        single_branch: yes
+        version: master
+
+
 
 #  handlers:
 #  - name: some_name
