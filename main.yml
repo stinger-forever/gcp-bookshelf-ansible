@@ -36,7 +36,7 @@
       git:
         repo: https://github.com/GoogleCloudPlatform/getting-started-python.git
         dest: /opt/app
-        single_branch: yes
+#        single_branch: yes
         version: master
 
 
