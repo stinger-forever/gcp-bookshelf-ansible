@@ -27,7 +27,7 @@
       ansible.builtin.user:
         name: pythonapp
         home: /home/pythonapp
-        state: present
+        #state: present
 
 
 #  handlers:
