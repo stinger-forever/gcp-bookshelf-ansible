@@ -15,6 +15,12 @@
           - supervisor
           - python
           - python3-pip
+    - name: pip setup part
+      pip:
+        - pip
+        - virtualenv
+      extra_args: --upgrade
+
 #  handlers:
 #  - name: some_name
 #    service: name=service_name state=running or restarted
