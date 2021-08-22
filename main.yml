@@ -15,10 +15,12 @@
           - supervisor
           - python
           - python3-pip
+
     - name: pip setup part
       pip:
-        - pip
-        - virtualenv
+        name:
+          - pip
+          - virtualenv
       extra_args: --upgrade
 
 #  handlers:
