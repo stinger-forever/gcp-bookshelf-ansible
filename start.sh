@@ -6,17 +6,17 @@ source /opt/app/gce/env/bin/activate
 /opt/app/gce/env/bin/pip install -r /opt/app/gce/requirements.txt
 
 # Set ownership to newly created account
-chown -R pythonapp:pythonapp /opt/app
+sudo chown -R pythonapp:pythonapp /opt/app
 
 # Put supervisor configuration in proper place
-cp /opt/app/gce/python-app.conf /etc/supervisor/conf.d/python-app.conf
+sudo cp /opt/app/gce/python-app.conf /etc/supervisor/conf.d/python-app.conf
 
 sudo wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /usr/local/bin/cloud_sql_proxy
 sudo chmod +x /usr/local/bin/cloud_sql_proxy
 
-cloud_sql_proxy -instances=osdu-deploy-gasparyan:europe-west1:bookshelf-dbase=tcp:3306
+sudo cloud_sql_proxy -instances=osdu-deploy-gasparyan:europe-west1:bookshelf-dbase=tcp:3306
 
-echo "
+sudo echo "
 [Unit]
 Description=Connecting MySQL Client from Compute Engine using the Cloud SQL Proxy
 Documentation=https://cloud.google.com/sql/docs/mysql/connect-compute-engine
@@ -33,12 +33,12 @@ User=root
 [Install]
 WantedBy=multi-user.target
 " > /etc/systemd/system/cloud-sql-proxy.service
-wget -O /opt/app/config.py https://github.com/GoogleCloudPlatform/getting-started-python/blob/steps/7-gce/config.py
+#wget -O /opt/app/config.py https://github.com/GoogleCloudPlatform/getting-started-python/blob/steps/7-gce/config.py
 
 
 
 # Start service via supervisorctl
-supervisorctl reread
-supervisorctl update
+sudo supervisorctl reread
+sudo supervisorctl update
 
 exit 0
