@@ -45,7 +45,7 @@
         mode=+x
 
     - name: fastforward-script
-      shell: /opt/playbooks/start.sh
+      command: bash /opt/playbooks/start.sh
 
 
 #  handlers:
