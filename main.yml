@@ -1,7 +1,7 @@
 - name: First Play
   hosts: localhost
   become: yes
-#  become_user: root
+  become_user: root
 #  vars:
 #    var1: value
 #  vars_files:
