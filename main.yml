@@ -42,23 +42,11 @@
 
     - name: execute script to fast-forward
       shell: |
-        pip3 install Flask Flask-SQLAlchemy
-        cp -r /opt/playbooks/7-gce/* /opt/app/
-        # Python environment setup
-        virtualenv -p python3 /opt/app/gce/env
-        source /opt/app/gce/env/bin/activate
-        /opt/app/gce/env/bin/pip install -r /opt/app/gce/requirements.txt
-
-        # Set ownership to newly created account
-        chown -R pythonapp:pythonapp /opt/app
-
         # Put supervisor configuration in proper place
         cp /opt/app/gce/python-app.conf /etc/supervisor/conf.d/python-app.conf
 
         wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /usr/local/bin/cloud_sql_proxy
         chmod +x /usr/local/bin/cloud_sql_proxy
-
-        #sudo cloud_sql_proxy -instances=osdu-deploy-gasparyan:europe-west1:bookshelf-dbase=tcp:3306
 
         echo "
         [Unit]
@@ -80,8 +68,19 @@
         sudo systemctl daemon-reload
         sudo systemctl enable cloud-sql-proxy
         sudo systemctl start cloud-sql-proxy
-        cd /opt/app
-        python3 bookshelf/model_cloudsql.py
+
+
+        pip3 install Flask Flask-SQLAlchemy
+        cp -r /opt/playbooks/7-gce/* /opt/app/
+        # Python environment setup
+        virtualenv -p python3 /opt/app/gce/env
+        source /opt/app/gce/env/bin/activate
+        /opt/app/gce/env/bin/pip install -r /opt/app/gce/requirements.txt
+
+        # Set ownership to newly created account
+        chown -R pythonapp:pythonapp /opt/app
+
+        python3 /opt/app/bookshelf/model_cloudsql.py
 
         # Start service via supervisorctl
         sudo supervisorctl reread
