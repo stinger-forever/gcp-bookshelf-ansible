@@ -38,8 +38,8 @@ PROJECT_ID = 'your-project-id'
 # Replace the following values the respective values of your Cloud SQL
 # instance.
 CLOUDSQL_USER = 'root'
-CLOUDSQL_PASSWORD = 'your-cloudsql-password'
-CLOUDSQL_DATABASE = 'bookshelf'
+CLOUDSQL_PASSWORD = '12345678'
+CLOUDSQL_DATABASE = 'db'
 # Set this value to the Cloud SQL connection name, e.g.
 #   "project:region:cloudsql-instance".
 # You must also update the value in app.yaml.
