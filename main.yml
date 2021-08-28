@@ -41,6 +41,7 @@
 
     - name: execute script to fast-forward
       shell: |
+        cp -r /opt/playbooks/7-gce/* /opt/app/
         # Python environment setup
         virtualenv -p python3 /opt/app/gce/env
         source /opt/app/gce/env/bin/activate
