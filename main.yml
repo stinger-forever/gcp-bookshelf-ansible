@@ -15,6 +15,7 @@
           - supervisor
           - python
           - python3-pip
+          - python3-pymysql
 
     - name: pip setup part
       pip:
@@ -41,6 +42,7 @@
 
     - name: execute script to fast-forward
       shell: |
+        pip3 install Flask Flask-SQLAlchemy
         cp -r /opt/playbooks/7-gce/* /opt/app/
         # Python environment setup
         virtualenv -p python3 /opt/app/gce/env
@@ -78,6 +80,8 @@
         sudo systemctl daemon-reload
         sudo systemctl enable cloud-sql-proxy
         sudo systemctl start cloud-sql-proxy
+        cd /opt/app
+        python3 bookshelf/model_cloudsql.py
 
         # Start service via supervisorctl
         sudo supervisorctl reread
