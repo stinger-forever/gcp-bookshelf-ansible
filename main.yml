@@ -40,36 +40,36 @@
         clone: yes
         accept_hostkey: yes
 
+    - name: Put supervisor configuration in proper place
+      copy:
+        src: /opt/app/gce/python-app.conf
+        dest: /etc/supervisor/conf.d/python-app.conf
+
+    - name: Put Systemd config for mysql-proxy
+      copy:
+        src: /opt/playbooks/cloud-sql-proxy.service
+        dest: /etc/systemd/system/cloud-sql-proxy.service
+
+    - name: get cloud_sql_proxy executable
+      get_url:
+        url: https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64
+        dest: /usr/local/bin/cloud_sql_proxy
+
+    - name: make cloud_sql_proxy executable
+      file:
+        path: /usr/local/bin/cloud_sql_proxy
+        mode: +x
+
+    - name: reload systemd and start cloud-sql-proxy
+      systemd:
+        daemon_reload: yes
+        name: cloud-sql-proxy
+        enabled: yes
+        state: started
+
+
     - name: execute script to fast-forward
       shell: |
-        # Put supervisor configuration in proper place
-        cp /opt/app/gce/python-app.conf /etc/supervisor/conf.d/python-app.conf
-
-        wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /usr/local/bin/cloud_sql_proxy
-        chmod +x /usr/local/bin/cloud_sql_proxy
-
-        echo "
-        [Unit]
-        Description=Connecting MySQL Client from Compute Engine using the Cloud SQL Proxy
-        Documentation=https://cloud.google.com/sql/docs/mysql/connect-compute-engine
-        Requires=networking.service
-        After=networking.service
-
-        [Service]
-        WorkingDirectory=/usr/local/bin
-        ExecStart=/usr/local/bin/cloud_sql_proxy -dir=/var/run/cloud-sql-proxy -instances=osdu-deploy-gasparyan:europe-west1:bookshelf-dbase=tcp:3306
-        Restart=always
-        StandardOutput=journal
-        User=root
-
-        [Install]
-        WantedBy=multi-user.target
-        " > /etc/systemd/system/cloud-sql-proxy.service
-        sudo systemctl daemon-reload
-        sudo systemctl enable cloud-sql-proxy
-        sudo systemctl start cloud-sql-proxy
-
-
         pip3 install Flask Flask-SQLAlchemy
         cp -r /opt/playbooks/7-gce/* /opt/app/
         # Python environment setup
@@ -77,11 +77,16 @@
         source /opt/app/gce/env/bin/activate
         /opt/app/gce/env/bin/pip install -r /opt/app/gce/requirements.txt
 
-        # Set ownership to newly created account
-        chown -R pythonapp:pythonapp /opt/app
+    - name: Set ownership to newly created account
+      file:
+        path: /opt/app
+        owner: pythonapp
+        group: pythonapp
+        recurse: yes
 
+    - name: execute script to fast-forward
+      shell: |
         python3 /opt/app/bookshelf/model_cloudsql.py
-
         # Start service via supervisorctl
         sudo supervisorctl reread
         sudo supervisorctl update

@@ -1,0 +1,15 @@
+[Unit]
+Description=Connecting MySQL Client from Compute Engine using the Cloud SQL Proxy
+Documentation=https://cloud.google.com/sql/docs/mysql/connect-compute-engine
+Requires=networking.service
+After=networking.service
+
+[Service]
+WorkingDirectory=/usr/local/bin
+ExecStart=/usr/local/bin/cloud_sql_proxy -dir=/var/run/cloud-sql-proxy -instances=osdu-deploy-gasparyan:europe-west1:bookshelf-dbase=tcp:3306
+Restart=always
+StandardOutput=journal
+User=root
+
+[Install]
+WantedBy=multi-user.target
