@@ -47,7 +47,7 @@
 
     - name: Put Systemd config for mysql-proxy
       copy:
-        src: /opt/playbooks/cloud-sql-proxy.service
+        src: /opt/playbooks/configs/cloud-sql-proxy.service
         dest: /etc/systemd/system/cloud-sql-proxy.service
 
     - name: get cloud_sql_proxy executable
