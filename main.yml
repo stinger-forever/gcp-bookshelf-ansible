@@ -36,7 +36,6 @@
       git:
         repo: https://github.com/GoogleCloudPlatform/getting-started-python.git
         dest: /opt/app
-        version: steps
         clone: yes
         accept_hostkey: yes
 
@@ -45,13 +44,13 @@
         # Python environment setup
         virtualenv -p python3 /opt/app/gce/env
         source /opt/app/gce/env/bin/activate
-        /opt/app/gce/env/bin/pip install -r /opt/app/7-gce/requirements.txt
+        /opt/app/gce/env/bin/pip install -r /opt/app/gce/requirements.txt
 
         # Set ownership to newly created account
         chown -R pythonapp:pythonapp /opt/app
 
         # Put supervisor configuration in proper place
-        cp /opt/playbooks/python-app.conf /etc/supervisor/conf.d/python-app.conf
+        cp /opt/app/gce/python-app.conf /etc/supervisor/conf.d/python-app.conf
 
         wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /usr/local/bin/cloud_sql_proxy
         chmod +x /usr/local/bin/cloud_sql_proxy

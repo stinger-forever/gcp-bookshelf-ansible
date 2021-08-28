@@ -25,7 +25,7 @@ After=networking.service
 
 [Service]
 WorkingDirectory=/usr/local/bin
-ExecStart=/usr/local/bin/cloud_sql_proxy -dir=/var/run/cloud-sql-proxy -instances=<INSTANCE_CONNECTION_NAME>=tcp:3306
+ExecStart=/usr/local/bin/cloud_sql_proxy -dir=/var/run/cloud-sql-proxy -instances=osdu-deploy-gasparyan:europe-west1:bookshelf-dbase=tcp:3306
 Restart=always
 StandardOutput=journal
 User=root
@@ -33,6 +33,7 @@ User=root
 [Install]
 WantedBy=multi-user.target
 " > /etc/systemd/system/cloud-sql-proxy.service
+
 #wget -O /opt/app/config.py https://github.com/GoogleCloudPlatform/getting-started-python/blob/steps/7-gce/config.py
 
 
