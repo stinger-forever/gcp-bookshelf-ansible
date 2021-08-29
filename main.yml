@@ -30,8 +30,21 @@
         home: /home/pythonapp
         state: present
 
-    - name: export variable
-      shell: "export HOME=/root"
+    - name: export variables
+      shell: export HOME=/root
+
+    - name: get project ID
+      shell: gcloud projects list | awk '{print$1}' | awk NR==2
+      register: project_id
+
+    - name: get db instance name
+      shell: gcloud sql instances list | awk '{print$1}' | awk NR==2
+      register: db_instance
+
+    - name: get db password
+      shell: gcloud secrets versions access latest --secret="bookshelf-user"
+      register: db_password
+
 
     - name: clone the project
       git:
@@ -49,6 +62,13 @@
       copy:
         src: /opt/playbooks/configs/cloud-sql-proxy.service
         dest: /etc/systemd/system/cloud-sql-proxy.service
+
+    - name: configure systemd for mysql proxy
+      lineinfile:
+        path: /etc/systemd/system/cloud-sql-proxy.service
+        regexp: '^(.*)ExecStart=/usr/local/bin/cloud_sql_proxy(.*)$'
+        line: ExecStart=/usr/local/bin/cloud_sql_proxy -dir=/var/run/cloud-sql-proxy -instances={{ project_id }}:europe-west1:{{ db_instance }}=tcp:3306
+        backrefs: yes
 
     - name: get cloud_sql_proxy executable
       get_url:

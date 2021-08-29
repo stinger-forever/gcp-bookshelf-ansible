@@ -28,22 +28,22 @@ SECRET_KEY = 'secret'
 # configure the respective settings for the one you choose below.
 # You do not have to configure the other data backends. If unsure, choose
 # 'datastore' as it does not require any additional configuration.
-DATA_BACKEND = 'cloudsql'
+DATA_BACKEND = 'datastore'
 
 # Google Cloud Project ID. This can be found on the 'Overview' page at
 # https://console.developers.google.com
-PROJECT_ID = 'osdu-deploy-gasparyan'
+PROJECT_ID = 'project'
 
 # CloudSQL & SQLAlchemy configuration
 # Replace the following values the respective values of your Cloud SQL
 # instance.
-CLOUDSQL_USER = 'bookshelf-user'
-CLOUDSQL_PASSWORD = '12345678'
-CLOUDSQL_DATABASE = 'db'
+CLOUDSQL_USER = 'db-user'
+CLOUDSQL_PASSWORD = 'somepassword'
+CLOUDSQL_DATABASE = 'database'
 # Set this value to the Cloud SQL connection name, e.g.
 #   "project:region:cloudsql-instance".
 # You must also update the value in app.yaml.
-CLOUDSQL_CONNECTION_NAME = 'osdu-deploy-gasparyan:europe-west1:bookshelf-dbase=tcp:3306'
+CLOUDSQL_CONNECTION_NAME = 'project:region:instance=tcp:3306'
 
 # The CloudSQL proxy is used locally to connect to the cloudsql instance.
 # To start the proxy, use:
