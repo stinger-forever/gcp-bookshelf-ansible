@@ -104,6 +104,13 @@
         line: DATA_BACKEND = 'cloudsql'
         backrefs: yes
 
+    - name: configure project ID for python app
+      lineinfile:
+        path: /opt/app/config.py
+        regexp: '^(.*)PROJECT_ID =(.*)$'
+        line: PROJECT_ID = '{{ project_id.stdout }}'
+        backrefs: yes
+
     - name: configure mysql user for python app
       lineinfile:
         path: /opt/app/config.py
