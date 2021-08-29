@@ -67,7 +67,7 @@
       lineinfile:
         path: /etc/systemd/system/cloud-sql-proxy.service
         regexp: '^(.*)ExecStart=/usr/local/bin/cloud_sql_proxy(.*)$'
-        line: ExecStart=/usr/local/bin/cloud_sql_proxy -dir=/var/run/cloud-sql-proxy -instances={{ project_id }}:europe-west1:{{ db_instance }}=tcp:3306
+        line: ExecStart=/usr/local/bin/cloud_sql_proxy -dir=/var/run/cloud-sql-proxy -instances={{ project_id.stdout }}:europe-west1:{{ db_instance.stdout }}=tcp:3306
         backrefs: yes
 
     - name: get cloud_sql_proxy executable
@@ -97,6 +97,41 @@
         source /opt/app/gce/env/bin/activate
         /opt/app/gce/env/bin/pip install -r /opt/app/gce/requirements.txt
 
+    - name: configure databackend for python app
+      lineinfile:
+        path: /opt/app/config.py
+        regexp: '^(.*)DATA_BACKEND =(.*)$'
+        line: DATA_BACKEND = 'cloudsql'
+        backrefs: yes
+
+    - name: configure mysql user for python app
+      lineinfile:
+        path: /opt/app/config.py
+        regexp: '^(.*)CLOUDSQL_USER =(.*)$'
+        line: CLOUDSQL_USER = 'bookshelf-user'
+        backrefs: yes
+
+    - name: configure mysql password for python app
+      lineinfile:
+        path: /opt/app/config.py
+        regexp: '^(.*)CLOUDSQL_PASSWORD =(.*)$'
+        line: CLOUDSQL_PASSWORD = '{{ db_password.stdout }}'
+        backrefs: yes
+
+    - name: configure mysql database for python app
+      lineinfile:
+        path: /opt/app/config.py
+        regexp: '^(.*)CLOUDSQL_DATABASE =(.*)$'
+        line: CLOUDSQL_DATABASE = 'db'
+        backrefs: yes
+
+    - name: configure mysql connection for python app
+      lineinfile:
+        path: /opt/app/config.py
+        regexp: '^(.*)CLOUDSQL_CONNECTION_NAME =(.*)$'
+        line: CLOUDSQL_CONNECTION_NAME = '{{ project_id.stdout }}:europe-west1:{{ db_instance.stdout }}=tcp:3306'
+        backrefs: yes
+
     - name: Set ownership to newly created account
       file:
         path: /opt/app
@@ -110,16 +145,3 @@
         # Start service via supervisorctl
         sudo supervisorctl reread
         sudo supervisorctl update
-
-#    - name: change script permission
-#      file:
-#        dest=/opt/playbooks/start.sh
-#        mode=+x
-#
-#    - name: fastforward-script
-#      command: bash /opt/playbooks/start.sh
-
-
-#  handlers:
-#  - name: some_name
-#    service: name=service_name state=running or restarted
