@@ -97,8 +97,8 @@
 
     - name: reload systemd and start cloud-sql-proxy
       systemd:
-        daemon_reload: yes
         name: cloud-sql-proxy
+        daemon_reload: yes
         enabled: yes
         state: started
 
