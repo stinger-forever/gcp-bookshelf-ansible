@@ -10,6 +10,7 @@
     - name: setup dependencies
       apt:
         update_cache: yes
+        allow_unauthenticated: yes
         name:
           - wget
           - build-essential
