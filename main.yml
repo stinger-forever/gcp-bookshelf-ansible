@@ -190,5 +190,5 @@
       shell: |
         python /opt/app/7-gce/bookshelf/model_cloudsql.py
         # Start service via supervisorctl
-        sudo supervisorctl reread
-        sudo supervisorctl update
+        supervisorctl reread
+        supervisorctl update
