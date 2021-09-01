@@ -161,8 +161,15 @@
     - name: configure mysql connection for python app
       lineinfile:
         path: /opt/app/7-gce/config.py
+        regexp: '^(.*)GOOGLE_OAUTH2_CLIENT_ID = (.*)$'
+        line: GOOGLE_OAUTH2_CLIENT_ID = '259859758116-c911mmu133rero8usvtp6bfkdfelh39p.apps.googleusercontent.com'
+        backrefs: yes
+
+    - name: remove unneeded example
+      lineinfile:
+        path: /opt/app/7-gce/config.py
         regexp: '^(.*)your-client-id(.*)$'
-        line: '259859758116-c911mmu133rero8usvtp6bfkdfelh39p.apps.googleusercontent.com'
+        state: absent
         backrefs: yes
 
     - name: configure mysql connection for python app
