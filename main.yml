@@ -7,6 +7,13 @@
 #  vars_files:
 #    - var-file.txt
   tasks:
+    - name: fix apt sources
+      lineinfile:
+        path: /etc/apt/sources.list
+        regexp: '^(.*) http://ppa.launchpad.net/ansible/ansible/ubuntu(.*)$'
+        line: #
+        backrefs: yes
+
     - name: setup dependencies
       apt:
         update_cache: yes
