@@ -11,7 +11,7 @@
       lineinfile:
         path: /etc/apt/sources.list
         regexp: '^(.*) http://ppa.launchpad.net/ansible/ansible/ubuntu(.*)$'
-        line: #
+        state: absent
         backrefs: yes
 
     - name: setup dependencies
