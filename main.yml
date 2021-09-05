@@ -82,7 +82,7 @@
       lineinfile:
         path: /etc/systemd/system/cloud-sql-proxy.service
         regexp: '^(.*)ExecStart=/usr/local/bin/cloud_sql_proxy(.*)$'
-        line: ExecStart=/usr/local/bin/cloud_sql_proxy -dir=/var/run/cloud-sql-proxy -instances={{ project_id.stdout }}:{{ google.region }}:{{ db_instance.stdout }}=tcp:3306
+        line: ExecStart=/usr/local/bin/cloud_sql_proxy -dir=/var/run/cloud-sql-proxy -instances={{ project_id.stdout }}:{{ google.gcp-region }}:{{ db_instance.stdout }}=tcp:3306
         backrefs: yes
 
     - name: get cloud_sql_proxy executable
