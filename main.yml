@@ -187,25 +187,29 @@
         owner: pythonapp
         group: pythonapp
         recurse: yes
-
-    - name: generate database tables
-      shell: python /opt/app/7-gce/bookshelf/model_cloudsql.py
-
     - name: Put supervisor configuration in proper place
       copy:
         src: /opt/playbooks/configs/python-app.conf
         dest: /etc/supervisor/conf.d/python-app.conf
-        notify:
-          - reload app
-          - restart app
+#            notify:
+#              - reload app
+#              - restart app
+
+
+    - name: generate database tables
+      shell: |
+        python /opt/app/7-gce/bookshelf/model_cloudsql.py
+        supervisorctl reread
+        supervisorctl update
+
 
 #    - name: reload supervisor
 #      supervisorctl:
 #        state: present
 
-  handlers:
-    - name: reload app
-      action: supervisorctl state=present
-
-    - name: restart app
-      action: supervisorctl name=pythonapp state=started
+#  handlers:
+#    - name: reload app
+#      action: supervisorctl state=present
+#
+#    - name: restart app
+#      action: supervisorctl name=pythonapp state=started
