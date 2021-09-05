@@ -5,7 +5,7 @@
 #  vars:
 #    var1: value
   vars_files:
-    - variables.yml
+    - vars/main.yml
   tasks:
     - name: fix apt sources
       lineinfile:
