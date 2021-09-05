@@ -208,4 +208,4 @@
       action: supervisorctl state=present
 
     - name: restart app
-      action: supervisorctl name=pythonapp state=restarted
+      action: supervisorctl name=pythonapp state=started
