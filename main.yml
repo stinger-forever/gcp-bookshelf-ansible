@@ -71,8 +71,7 @@
     - name: Put supervisor configuration in proper place
       copy:
         src: /opt/playbooks/configs/python-app.conf
-        dest: /etc/supervisor/supervisord.conf
-#        dest: /etc/supervisor/conf.d/python-app.conf
+        dest: /etc/supervisor/conf.d/python-app.conf
 
     - name: Put Systemd config for mysql-proxy
       copy:
@@ -198,3 +197,7 @@
     - name: reload supervisor
       supervisorctl:
         state: present
+
+  handlers:
+    - name: restart app
+      action: supervisorctl name=pythonapp state=restarted
