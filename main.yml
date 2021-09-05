@@ -103,77 +103,8 @@
       template:
         src: templates/config.py.j2
         dest: /opt/app/7-gce/config.py
-#    - name: configure databackend for python app
-#      lineinfile:
-#        path: /opt/app/7-gce/config.py
-#        regexp: '^(.*)DATA_BACKEND =(.*)$'
-#        line: DATA_BACKEND = 'cloudsql'
-#        backrefs: yes
-#
-#    - name: configure project ID for python app
-#      lineinfile:
-#        path: /opt/app/7-gce/config.py
-#        regexp: '^(.*)PROJECT_ID =(.*)$'
-#        line: PROJECT_ID = '{{ project_id.stdout }}'
-#        backrefs: yes
-#
-#    - name: configure mysql user for python app
-#      lineinfile:
-#        path: /opt/app/7-gce/config.py
-#        regexp: '^(.*)CLOUDSQL_USER =(.*)$'
-#        line: CLOUDSQL_USER = 'bookshelf-user'
-#        backrefs: yes
-#
-#    - name: configure mysql password for python app
-#      lineinfile:
-#        path: /opt/app/7-gce/config.py
-#        regexp: '^(.*)CLOUDSQL_PASSWORD =(.*)$'
-#        line: CLOUDSQL_PASSWORD = '{{ db_password.stdout }}'
-#        backrefs: yes
-#
-#    - name: configure mysql database for python app
-#      lineinfile:
-#        path: /opt/app/7-gce/config.py
-#        regexp: '^(.*)CLOUDSQL_DATABASE =(.*)$'
-#        line: CLOUDSQL_DATABASE = 'db'
-#        backrefs: yes
-#
-#    - name: configure mysql database for python app
-#      lineinfile:
-#        path: /opt/app/7-gce/config.py
-#        regexp: '^(.*)CLOUD_STORAGE_BUCKET =(.*)$'
-#        line: CLOUD_STORAGE_BUCKET = 'bookshelf-app-storage-gasparyan'
-#        backrefs: yes
-#
-#    - name: configure mysql connection for python app
-#      lineinfile:
-#        path: /opt/app/7-gce/config.py
-#        regexp: '^(.*)CLOUDSQL_CONNECTION_NAME =(.*)$'
-#        line: CLOUDSQL_CONNECTION_NAME = '{{ project_id.stdout }}:{{ google.region }}:{{ db_instance.stdout }}=tcp:3306'
-#        backrefs: yes
-#
-#    - name: configure mysql connection for python app
-#      lineinfile:
-#        path: /opt/app/7-gce/config.py
-#        regexp: '^(.*)GOOGLE_OAUTH2_CLIENT_ID = (.*)$'
-#        line: GOOGLE_OAUTH2_CLIENT_ID = '259859758116-c911mmu133rero8usvtp6bfkdfelh39p.apps.googleusercontent.com'
-#        backrefs: yes
-#
-#    - name: remove unneeded example
-#      lineinfile:
-#        path: /opt/app/7-gce/config.py
-#        regexp: '^(.*)your-client-id(.*)$'
-#        state: absent
-#        backrefs: yes
-#
-#    - name: configure mysql connection for python app
-#      lineinfile:
-#        path: /opt/app/7-gce/config.py
-#        regexp: '^(.*)GOOGLE_OAUTH2_CLIENT_SECRET =(.*)$'
-#        line: GOOGLE_OAUTH2_CLIENT_SECRET = '{{ oauth_secret.stdout }}'
-#        backrefs: yes
 
-    - name: execute script to fast-forward
+    - name: install dependencies and env
       shell: |
         # Python environment setup
         pip install flask flask_sqlalchemy pymysql
@@ -196,7 +127,7 @@
 #              - restart app
 
 
-    - name: generate database tables
+    - name: generate database tables and restart supervisorctl
       shell: |
         python /opt/app/7-gce/bookshelf/model_cloudsql.py
         supervisorctl reread
