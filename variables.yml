@@ -1,0 +1,10 @@
+google:
+  gcp-region: europe-west1
+  google-oauth: 259859758116-c911mmu133rero8usvtp6bfkdfelh39p.apps.googleusercontent.com
+
+app-config:
+  data-backend: cloudsql
+  mysql-user: bookshelf-user
+  mysql-database: db
+  storage-bucket: bookshelf-app-storage-gasparyan
+
