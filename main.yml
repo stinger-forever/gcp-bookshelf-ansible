@@ -102,6 +102,10 @@
         enabled: yes
         state: started
 
+    - name: configure application variables
+      template:
+        src: templates/config.py.j2
+        dest: /opt/app/7-gce/config.py
 #    - name: configure databackend for python app
 #      lineinfile:
 #        path: /opt/app/7-gce/config.py
