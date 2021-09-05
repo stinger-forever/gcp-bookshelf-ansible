@@ -68,10 +68,7 @@
         version: steps
         accept_hostkey: yes
 
-    - name: Put supervisor configuration in proper place
-      copy:
-        src: /opt/playbooks/configs/python-app.conf
-        dest: /etc/supervisor/conf.d/python-app.conf
+
 
     - name: Put Systemd config for mysql-proxy
       copy:
@@ -194,9 +191,18 @@
     - name: generate database tables
       shell: python /opt/app/7-gce/bookshelf/model_cloudsql.py
 
-    - name: reload supervisor
-      supervisorctl:
-        state: present
+    - name: Put supervisor configuration in proper place
+      copy:
+        src: /opt/playbooks/configs/python-app.conf
+        dest: /etc/supervisor/conf.d/python-app.conf
+        notify:
+          - restart app
+
+#    - name: reload supervisor
+#      supervisorctl:
+#        state: present
+
+
 
   handlers:
     - name: restart app
