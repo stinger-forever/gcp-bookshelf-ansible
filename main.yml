@@ -196,6 +196,7 @@
         src: /opt/playbooks/configs/python-app.conf
         dest: /etc/supervisor/conf.d/python-app.conf
         notify:
+          - reload app
           - restart app
 
 #    - name: reload supervisor
@@ -205,7 +206,9 @@
 
 
   handlers:
-    - name: restart app
+    - name: reload app
       action:
         - supervisorctl state=present
+    - name: restart app
+      action:
         - supervisorctl name=pythonapp state=restarted
