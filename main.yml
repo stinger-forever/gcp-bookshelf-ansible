@@ -194,6 +194,11 @@
     - name: generate database tables
       shell: python /opt/app/7-gce/bookshelf/model_cloudsql.py
 
-    - name: start supervisor
+    - name: reload supervisor
       supervisorctl:
         state: present
+
+    - name: restart supervisor
+      supervisorctl:
+        state: restarted
+        config: /etc/supervisor/conf.d/python-app.conf
