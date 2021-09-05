@@ -203,12 +203,9 @@
 #      supervisorctl:
 #        state: present
 
-
-
   handlers:
     - name: reload app
-      action:
-        - supervisorctl state=present
+      action: supervisorctl state=present
+
     - name: restart app
-      action:
-        - supervisorctl name=pythonapp state=restarted
+      action: supervisorctl name=pythonapp state=restarted
